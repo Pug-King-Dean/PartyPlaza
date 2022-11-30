@@ -8,7 +8,7 @@ namespace PartyPlaza
 {
     internal class MyGlobals
     {
-        public static bool frmClosing = false, frmEditForm = false;
+        public static bool frmClosing = false, frmEditForm = false, frmAddForm = false;
         public static int selectedCustNo;
     }
 }

@@ -44,12 +44,7 @@ namespace PartyPlaza
             errP.Clear();
             clearAddForm();
         }
-        private void pnlAddCustomer_Paint(object sender, PaintEventArgs e)
-        {
-            
-
-            
-        }
+       
 
         private void btnAddAdd_Click(object sender, EventArgs e)
         {
@@ -154,7 +149,7 @@ namespace PartyPlaza
                     drCustomer["Street"] = myCustomer.Street;
                     drCustomer["Town"] = myCustomer.Town;
                     drCustomer["County"] = myCustomer.County;
-                    drCustomer["Postcode"] = myCustomer.Postcode;
+                    drCustomer["CustPostcode"] = myCustomer.Postcode;
                     drCustomer["TelNo"] = myCustomer.TelNum;
                     drCustomer["Email"] = myCustomer.Email;
 
@@ -179,7 +174,7 @@ namespace PartyPlaza
 
         private void BtnAddCancel_Click(object sender, EventArgs e)
         {
-          
+          clearAddForm();
         }
 
         void clearAddForm()

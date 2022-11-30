@@ -30,9 +30,9 @@ namespace PartyPlaza
             get { return surname; }
             set
             {
-                if (MyValidation.validLength(value, 2, 20) && MyValidation.validLetterNumberWhite(value))
+                if (MyValidation.validLength(value, 2, 20) && MyValidation.validLetterNumberWhitespace(value))
                 {
-                    surname = MyValidation.firstLetterOfWord(value);
+                    surname = MyValidation.firstLetterEachWordToUppper(value);
                 }
                 else
                     throw new MyException("Surname must be 2 to 20 letters");
@@ -43,9 +43,9 @@ namespace PartyPlaza
             get { return forename; }
             set
             {
-                if (MyValidation.validLength(value, 2, 20) && MyValidation.validLetterNumberWhite(value))
+                if (MyValidation.validLength(value, 2, 20) && MyValidation.validLetterNumberWhitespace(value))
                 {
-                    forename = MyValidation.firstLetterOfWord(value);
+                    forename = MyValidation.firstLetterEachWordToUppper(value);
                 }
                 else
                     throw new MyException("Forename must be 2 to 20 letters");
@@ -55,12 +55,12 @@ namespace PartyPlaza
         {
             get { return email; }
             set {
-                if (MyValidation.validLength(value, 7, 25) && MyValidation.validLetterNumberWhite(value))
+                if (MyValidation.validLength(value, 12, 55) && MyValidation.validEmail(value))
                 {
-                    email = MyValidation.EachLetterToUpper(value);
+                    email = value;
                 }
                 else
-                    throw new MyException("Email must be 2 to 20 letters");
+                    throw new MyException("Email must be 7 to 55 letters");
             }
         }
     }
