@@ -26,3 +26,4 @@ C:\Users\Dean Gallagher\source\repos\PartyPlaza\PartyPlaza\obj\Debug\net6.0-wind
 C:\Users\Dean Gallagher\source\repos\PartyPlaza\PartyPlaza\obj\Debug\net6.0-windows\PartyPlaza.FrmCustomer.resources
 C:\Users\Dean Gallagher\source\repos\PartyPlaza\PartyPlaza\obj\Debug\net6.0-windows\PartyPlaza.FrmEditCustomer.resources
 C:\Users\Dean Gallagher\source\repos\PartyPlaza\PartyPlaza\obj\Debug\net6.0-windows\PartyPlaza.csproj.CopyComplete
+C:\Users\Dean Gallagher\source\repos\PartyPlaza\PartyPlaza\obj\Debug\net6.0-windows\PartyPlaza.FrmBooking.resources

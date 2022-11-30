@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+//import emailvalidator4j.EmailValidator;
 
 namespace PartyPlaza
 {
@@ -10,169 +12,276 @@ namespace PartyPlaza
     {
         public static bool validLength(string txt, int min, int max)
         {
-            bool valid = true;
+            bool ok = true;
 
             if (string.IsNullOrEmpty(txt))
-                valid = false;
-
+                ok = false;
             else if (txt.Length < min || txt.Length > max)
-            {
-
-                valid = false;
-
-            }
-            return valid;
+                ok = false;
+            return ok;
         }
-        public static bool validNumber(string txt)
+        public static bool validNumber(String txt)
         {
-            bool valid = true;
-            for (int i = 0; i < txt.Length; i++)
+            bool ok = true;
+            for (int x = 0; x < txt.Length; x++)
             {
-                if (!(char.IsNumber(txt[i])))
-                    valid = false;
-
-            }
-            return valid;
-        }
-        public static bool validLetter(string txt)//only allows aplhabatic characters
-        {
-            bool valid = true;
-
-            if (txt.Trim().Length == 0)
-                valid = false;
-            else
-            {
-                for (int i = 0; i < txt.Length; i++)
+                if (!(char.IsNumber(txt[x])))
                 {
-                    if (!(char.IsNumber(txt[i])))
-                        valid = false;
+                    ok = false;
                 }
             }
-
-            return valid;
+            return ok;
         }
-        public static bool validLetterWhite(string txt)//only allows spaces
+        public static bool validLetter(String txt) //allows alphabetic characters 
         {
-            bool valid = true;
-
+            bool ok = true;
             if (txt.Trim().Length == 0)
-                valid = false;
+            {
+                ok = false;
+            }
             else
             {
-                for (int i = 0; i < txt.Length; i++)
+                for (int x = 0; x < txt.Length; x++)
                 {
-                    if (!(char.IsLetter(txt[i])) && !(char.IsWhiteSpace(txt[i])))
-                        valid = false;
+                    if (!(char.IsLetter(txt[x])))
+                        ok = false;
                 }
             }
-
-            return valid;
+            return ok;
         }
-        public static bool validLetterNumberWhite(string txt)//ALL
+        public static bool validTelLength(string txt, int length)
         {
-            bool valid = true;
+            bool ok = true;
+
+            if (string.IsNullOrEmpty(txt))
+                ok = false;
+            else if (txt.Length != length)
+                ok = false;
+            return ok;
+        }
+
+        public static bool validLetterWhitespace(String txt)  //allows alphabe characters and whitespace
+        {
+            bool ok = true;
 
             if (txt.Trim().Length == 0)
-                valid = false;
+            {
+                ok = false;
+            }
             else
             {
-                for (int i = 0; i < txt.Length; i++)
+                for (int x = 0; x < txt.Length; x++)
                 {
-                    if (!(char.IsLetter(txt[i])) && !(char.IsNumber(txt[i])) && !(char.IsWhiteSpace(txt[i])))
-                        valid = false;
+                    if (!(char.IsLetter(txt[x])) && !(char.IsWhiteSpace(txt[x])))
+                        ok = false;
                 }
             }
-
-            return valid;
+            return ok;
         }
-        public static bool validForename(string txt)//ALL
+        public static bool validLetterNumberWhitespace(String txt)  //allows alphanumeric and whitespace
         {
-            bool valid = true;
+            bool ok = true;
 
             if (txt.Trim().Length == 0)
-                valid = false;
+            {
+                ok = false;
+            }
             else
             {
-                for (int i = 0; i < txt.Length; i++)
+                for (int x = 0; x < txt.Length; x++)
                 {
-                    if (!(char.IsLetter(txt[i])) && !(char.IsWhiteSpace(txt[i])) && !(txt[i].Equals('-')))
-                        valid = false;
+                    if (!(char.IsLetter(txt[x])) && !(char.IsWhiteSpace(txt[x])) && !(char.IsNumber(txt[x])))
+                        ok = false;
                 }
             }
-
-            return valid;
+            return ok;
         }
-        public static bool validSurname(string txt)//ALL
+        public static bool validForename(String txt)  // allows alphabetic, dash and whitespace
         {
-            bool valid = true;
+            bool ok = true;
+            if (txt.Trim().Length == 0)
+            {
+                ok = false;
+            }
+            else
+            {
+                for (int x = 0; x < txt.Length; x++)
+                {
+                    if (!(char.IsLetter(txt[x])) && !(char.IsWhiteSpace(txt[x])) && !(txt[x].Equals('-')))
+                        ok = false;
+                }
+            }
+            return ok;
+        }
+        public static bool validSurname(String txt)  //allows alphabetic, dash ad whitespace
+        {
+            bool ok = true;
+            if (txt.Trim().Length == 0)
+            {
+                ok = false;
+            }
+            else
+            {
+                for (int x = 0; x < txt.Length; x++)
+                {
+                    if (!(char.IsLetter(txt[x])) && !(char.IsWhiteSpace(txt[x])) && !(txt[x].Equals('-'))
+                            && !(txt[x].Equals('\'')))
+                        ok = false;
+                }
+            }
+            return ok;
+        }
+
+        public static bool validStreet(String txt)  //allows alphanumeric, dash, slash and whitespace
+        {
+            bool ok = true;
 
             if (txt.Trim().Length == 0)
-                valid = false;
+            {
+                ok = false;
+            }
             else
             {
-                for (int i = 0; i < txt.Length; i++)
+                for (int x = 0; x < txt.Length; x++)
                 {
-                    if (!(char.IsLetter(txt[i])) && !(char.IsWhiteSpace(txt[i]))
-                        && !(txt[i].Equals('-')) && !(txt[i].Equals('\'')))
-                        valid = false;
+                    if (!(char.IsLetter(txt[x])) && !(txt[x].Equals('-')) && !(txt[x].Equals('/') && !(char.IsNumber(txt[x])))
+                        && !(txt[x].Equals('&')) && !(txt[x].Equals(' ')))
+                    {
+                        ok = false;
+                    }
                 }
             }
-
-            return valid;
+            return ok;
         }
-        public static String firstLetterOfWord(string txt)//npt Wrking
+
+        public static bool validDOB(String txt)
         {
-            Char[] array = txt.ToCharArray();
+            DateTime currentDate = DateTime.Now;
+            DateTime dogDOB = Convert.ToDateTime(txt);
+
+            TimeSpan t = currentDate - dogDOB;
+            double NoOfDays = t.TotalDays;
+
+            bool ok = true;
+
+            if (txt.Trim().Length == 0)
+            {
+                ok = false;
+            }
+            else
+            {
+                if (NoOfDays <= 56)
+                    ok = false;
+            }
+            return ok;
+        }
+        //firstLetterEachWordToUppper
+        public static String firstLetterEachWordToUppper(String word)
+        {
+            Char[] array = word.ToCharArray();
 
             if (Char.IsLower(array[0]))
             {
                 array[0] = Char.ToUpper(array[0]);
             }
-            for (int i = 0; i < txt.Length; i++)
+            //go through array and check for spaces. Make any lowercase letters after a space uppercase
+            for (int x = 1; x < array.Length; x++)
             {
-                if (array[i] == ' ')
+                if (array[x - 1] == ' ')
                 {
-                    if (Char.IsLower(array[i]))
+                    if (Char.IsLower(array[x]))
                     {
-                        array[i] = Char.ToUpper(array[i]);
+                        array[x] = Char.ToUpper(array[x]);
                     }
                 }
                 else
-                    array[i] = Char.ToLower(array[i]);
+                    array[x] = Char.ToLower(array[x]);
             }
             return new String(array);
         }
-        public static String EachLetterToUpper(string txt)//npt Wrking
+        public static String EachLetterToUpper(String word)
         {
-            Char[] array = txt.ToCharArray();
-            for (int i = 0; i < txt.Length; i++)
-            {
+            Char[] array = word.ToCharArray();
 
-                if (Char.IsLower(array[i]))
+            for (int x = 0; x < array.Length; x++)
+            {
+                if (Char.IsLower(array[x]))
                 {
-                    array[i] = Char.ToUpper(array[i]);
+                    array[x] = Char.ToUpper(array[x]);
                 }
             }
             return new string(array);
         }
-        public static bool validEmail(string txt)//ALL
+        public static bool validIntRange(int min, int max)
         {
-            bool valid = true;
+            int num = 0;
+            bool ok = true;
 
-            if (txt.Trim().Length == 0)
-                valid = false;
-            else
+            do
             {
-                for (int i = 0; i < txt.Length; i++)
+                try
                 {
-                    if (!(char.IsLetter(txt[i])) && !(char.IsWhiteSpace(txt[i]))
-                        && !(txt[i].Equals('-')) && !(txt[i].Equals('\'')))
-                        valid = false;
-                }
-            }
+                    ok = true;
+                    throw new MyException("The number must be between" + min + " and " + max);
 
-            return valid;
+                    if (num < min || num > max)
+                    {
+                        ok = false;
+                        throw new MyException("The number must be between" + min + " and " + max);
+                    }
+                }
+                catch (MyException e)
+                {
+                    throw new MyException("The number must be between" + min + " and " + max);
+                    ok = false;
+                }
+            } while (!ok);
+
+            return ok;
         }
+
+        public static bool validEmail(String txt)
+        {
+            bool ok = true;
+            int at = -1, dot = -1;
+            Char[] array = txt.ToCharArray();
+
+            if (array.Length > 8)
+            {
+                for (int x = 0; x < array.Length; x++)
+                {
+                    if (array[x] == '@')
+                    {
+                        at = x;
+                        break;
+                    }
+                }
+
+                if (at != -1)
+                {
+                    for (int z = at; z < array.Length; z++)
+
+                        if (array[z] == '.')
+                        {
+                            dot = z;
+                        }
+
+                    if (dot != -1)
+                    {
+                        if (dot <= array.Length - 3)
+                            ok = true;
+                        else
+                            ok = false;
+                    }
+                    else
+                        ok = false;
+                }
+                else
+                    ok = false;
+            }
+            return ok;
+
+        }
+
     }
 }
-  

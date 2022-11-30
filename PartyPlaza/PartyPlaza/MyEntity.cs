@@ -39,9 +39,9 @@ namespace PartyPlaza
             get { return street; }
             set
             {
-                if (MyValidation.validLength(value, 5, 40) && MyValidation.validLetterNumberWhite(value))
+                if (MyValidation.validLength(value, 5, 40) && MyValidation.validLetterNumberWhitespace(value))
                 {
-                    street = MyValidation.firstLetterOfWord(value);
+                    street = MyValidation.firstLetterEachWordToUppper(value);
                 }
                 else
                     throw new MyException("Street must be 5-40 letters");
@@ -52,9 +52,9 @@ namespace PartyPlaza
             get { return town; }
             set
             {
-                if (MyValidation.validLength(value, 2, 20) && MyValidation.validLetterNumberWhite(value))
+                if (MyValidation.validLength(value, 2, 20) && MyValidation.validLetterNumberWhitespace(value))
                 {
-                    street = MyValidation.firstLetterOfWord(value);
+                    town = MyValidation.firstLetterEachWordToUppper(value);
                 }
                 else
                     throw new MyException("Town must be 2 to 20 letters");
@@ -65,9 +65,9 @@ namespace PartyPlaza
             get { return county; }
             set
             {
-                if (MyValidation.validLength(value, 2, 20) && MyValidation.validLetterNumberWhite(value))
+                if (MyValidation.validLength(value, 2, 20) && MyValidation.validLetterNumberWhitespace(value))
                 {
-                    street = MyValidation.EachLetterToUpper(value);
+                    county = MyValidation.firstLetterEachWordToUppper(value);
                 }
                 else
                     throw new MyException("County must be 2 to 20 letters");
@@ -78,9 +78,9 @@ namespace PartyPlaza
             get { return postcode; }
             set
             {
-                if (MyValidation.validLength(value, 7, 8) && MyValidation.validLetterNumberWhite(value))
+                if (MyValidation.validLength(value, 7, 8) && MyValidation.validLetterNumberWhitespace(value))
                 {
-                    postcode = MyValidation.firstLetterOfWord(value);
+                    postcode = value;
                 }
                 else
                     throw new MyException("Postcode must be 7 or 8 letters, also only alphabetic characters");
@@ -91,7 +91,7 @@ namespace PartyPlaza
             get { return telNum; }
             set
             {
-                if (MyValidation.validLength(value, 11, 11) && MyValidation.validNumber(value))
+                if (MyValidation.validTelLength(value, 11) && MyValidation.validNumber(value))
                 {
                     telNum = value;
                 }
