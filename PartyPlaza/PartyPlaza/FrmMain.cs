@@ -68,7 +68,12 @@ namespace PartyPlaza
                 switch (startIndex)
                 {
                     case 1:
-                        //Booking button
+                        FrmDisplayBooking frmBook = new FrmDisplayBooking();
+                        frmBook.TopLevel = false;
+                        frmBook.FormBorderStyle = FormBorderStyle.None;
+                        frmBook.WindowState = FormWindowState.Maximized;
+                        pnlMain.Controls.Add(frmBook);
+                        frmBook.Show();
                         break;
 
                     case 2:
@@ -148,13 +153,83 @@ namespace PartyPlaza
                 }
             }
         }
-
-        private void pictureBox5_Click(object sender, EventArgs e)
+        private void pnlMain_ControlRemoved(object sender, ControlEventArgs e)
         {
-
+            if (MyGlobals.frmEditCustomer)
+            {
+                FrmEditCustomer frmEditCust = new FrmEditCustomer();
+              frmEditCust.TopLevel = false;
+              frmEditCust.FormBorderStyle = FormBorderStyle.None;
+              frmEditCust.WindowState = FormWindowState.Maximized;
+              pnlMain.Controls.Add(frmEditCust);
+              frmEditCust.Show();
+            }
+            if (MyGlobals.frmAddCustomer)
+            {
+                FrmAddCustomer frmAddCust = new FrmAddCustomer();
+                frmAddCust.TopLevel = false;
+                frmAddCust.FormBorderStyle = FormBorderStyle.None;
+                frmAddCust.WindowState = FormWindowState.Maximized;
+                pnlMain.Controls.Add(frmAddCust);
+                frmAddCust.Show();
+            }
+            if (MyGlobals.frmEditBooking)
+            {
+                FrmEditBooking frmEditCust = new FrmEditBooking();
+                frmEditCust.TopLevel = false;
+                frmEditCust.FormBorderStyle = FormBorderStyle.None;
+                frmEditCust.WindowState = FormWindowState.Maximized;
+                pnlMain.Controls.Add(frmEditCust);
+                frmEditCust.Show();
+            }
+            if (MyGlobals.frmBooking)
+            {
+                FrmBooking frmAddBook = new FrmBooking();
+                frmAddBook.TopLevel = false;
+                frmAddBook.FormBorderStyle = FormBorderStyle.None;
+                frmAddBook.WindowState = FormWindowState.Maximized;
+                pnlMain.Controls.Add(frmAddBook);
+                frmAddBook.Show();
+            }
+            //if (MyGlobals.frmEditSupplier)
+            //{
+            //    FrmEditSupplier frmEditSupp = new FrmEditSupplier();
+            //    frmEditSupp.TopLevel = false;
+            //    frmEditSupp.FormBorderStyle = FormBorderStyle.None;
+            //    frmEditSupp.WindowState = FormWindowState.Maximized;
+            //    pnlMain.Controls.Add(frmEditSupp);
+            //    frmEditSupp.Show();
+            //}
+            //else if (MyGlobals.frmAddSupplier)
+            //{
+            //    FrmAddSupplier frmAddSupp = new FrmAddSupplier();
+            //    frmAddSupp.TopLevel = false;
+            //    frmAddSupp.FormBorderStyle = FormBorderStyle.None;
+            //    frmAddSupp.WindowState = FormWindowState.Maximized;
+            //    pnlMain.Controls.Add(frmAddSupp);
+            //    frmAddSupp.Show();
+            //}
+            //else if (MyGlobals.frmAddOrder)
+            //{
+            //    FrmAddOrder frmAddOrderProduct = new FrmAddOrder();
+            //    frmAddOrderProduct.TopLevel = false;
+            //    frmAddOrderProduct.FormBorderStyle = FormBorderStyle.None;
+            //    frmAddOrderProduct.WindowState = FormWindowState.Maximized;
+            //    pnlMain.Controls.Add(frmAddOrderProduct);
+            //    frmAddOrderProduct.Show();
+            //}
+            //else if (MyGlobals.frmEditOrder)
+            //{
+            //    FrmEditOrder frmEditOrderProduct = new FrmEditOrder();
+            //    frmEditOrderProduct.TopLevel = false;
+            //    frmEditOrderProduct.FormBorderStyle = FormBorderStyle.None;
+            //    frmEditOrderProduct.WindowState = FormWindowState.Maximized;
+            //    pnlMain.Controls.Add(frmEditOrderProduct);
+            //    frmEditOrderProduct.Show();
+            // }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void pictureBox5_Click(object sender, EventArgs e)
         {
 
         }
@@ -200,7 +275,7 @@ namespace PartyPlaza
         {
           
 
-            FrmBooking frmBook = new FrmBooking();
+            FrmDisplayBooking frmBook = new FrmDisplayBooking();
             frmBook.TopLevel = false;
             frmBook.FormBorderStyle = FormBorderStyle.None;
             frmBook.WindowState = FormWindowState.Maximized;

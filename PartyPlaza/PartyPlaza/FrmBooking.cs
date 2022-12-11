@@ -14,23 +14,42 @@ namespace PartyPlaza
 {
     public partial class FrmBooking : Form
     {
-        public FrmBooking()
-        {
-            InitializeComponent();
-        }
-
         SqlDataAdapter daCustomers, daNames, daProduct, daKennels, daBooking, daBooking2,
-           daBookingDet, daBookingDet2, daBookedKennels, daCust;
+          daBookingDet, daBookingDet2, daBookedKennels, daCust, daProductType;
         DataSet dspartyPlaza = new DataSet();
-        SqlCommandBuilder cmdBBooking, cmdBookingDet, cmdBBookedKennels, cmdBBooking2, cmdBBookingDet2;
+        SqlCommandBuilder cmdBCutomerDetails, cmdBProductType, cmdBBooking, cmdBookingDet, cmdBBookedKennels, cmdBBooking2, cmdBBookingDet2;
         SqlCommand cmdBooking, cmdBookingDetails, cmdCustomerDetails, cmdProductDetails, cmdKennelDetails,
             cmdCustDets;
         SqlConnection conn;
         DataRow drCustomer;
         String connStr;
         String sqlNames, sqlCustomerDetails, sqlProductDetails, sqlKennelDetails,
-            sqlBooking, sqlBooking2, sqlBookingDet, sqlBookingDet2, sqlBookedKennels, sqlCustDets;
+            sqlBooking, sqlBooking2, sqlBookingDet, sqlBookingDet2, sqlBookedKennels, sqlCustDets, sqlProductType;
 
+        public FrmBooking()
+        {
+            InitializeComponent();
+        }
+
+       
+        private void listBoxCust_Click(object sender, EventArgs e)
+        {
+         
+          
+
+            drCustomer = dspartyPlaza.Tables["Customer"].Rows.Find(listBoxCust.SelectedValue);
+            label4.Text = drCustomer["CustomerNo"].ToString();
+            label5.Text = drCustomer["Forename"].ToString() + " " + drCustomer["Surname"].ToString();
+            label6.Text = drCustomer["Street"].ToString();
+            label7.Text = drCustomer["Town"].ToString();
+            label8.Text = drCustomer["County"].ToString();
+            label9.Text = drCustomer["Custpostcode"].ToString();
+
+        }
+        private void listBoxProdType_Click(object sender, EventArgs e)
+        {
+            
+        }
 
         private void FrmBooking_Load(object sender, EventArgs e)
         {
@@ -40,19 +59,21 @@ namespace PartyPlaza
             dtpStartDate.MinDate = DateTime.Now;
 
            
-            connStr = @"Data Source = .\SQLEXPRESS01; Initial Catalog = InTheDogHouse; Integrated Security = true";
+            connStr = @"Data Source = .\SQLEXPRESS01; Initial Catalog = PartyPlaza; Integrated Security = true";
 
             sqlNames = @"Select Surname from customer order by surname";
             daNames = new SqlDataAdapter(sqlNames, connStr);
             daNames.Fill(dspartyPlaza, "Names");
 
             
+             conn = new SqlConnection(connStr);
+           
             sqlCustomerDetails = @"Select customerNo, surname, forename, surname + ', ' +
-Forename as name, street, town, county, custpostcode, telno, Email from customer where surname order by surname, forename";
-            conn = new SqlConnection(connStr);
-            cmdCustomerDetails = new SqlCommand(sqlCustomerDetails, conn);
-            daCustomers = new SqlDataAdapter(cmdCustomerDetails);
+            Forename as name, street, town, county, custpostcode, telno, Email from customer order by surname, forename";
+            daCustomers = new SqlDataAdapter(sqlCustomerDetails, conn);
+            cmdBCutomerDetails = new SqlCommandBuilder(daCustomers);
             daCustomers.FillSchema(dspartyPlaza, SchemaType.Source, "Customer");
+            daCustomers.Fill(dspartyPlaza, "Customer");
 
             sqlBooking = @"SELECT * from Booking where  customerNo LIKE @CustNo order by BookingNo";
             daBooking = new SqlDataAdapter(sqlBooking, conn);
@@ -61,19 +82,18 @@ Forename as name, street, town, county, custpostcode, telno, Email from customer
             daBooking = new SqlDataAdapter(cmdBooking);
             daBooking.FillSchema(dspartyPlaza, SchemaType.Source, "Booking");
 
+          
+            sqlProductType = @"SELECT * from ProductType";
+            daProductType = new SqlDataAdapter(sqlProductType, conn);
+            cmdBProductType = new SqlCommandBuilder(daProductType);
+            daProductType.FillSchema(dspartyPlaza, SchemaType.Source, "ProductType");
+            daProductType.Fill(dspartyPlaza, "ProductType");
+
             sqlBooking2 = @"SELECT * from Booking";
             daBooking2 = new SqlDataAdapter(sqlBooking2, conn);
             cmdBBooking2 = new SqlCommandBuilder(daBooking2);
             daBooking2.FillSchema(dspartyPlaza, SchemaType.Source, "Booking2");
             daBooking2.Fill(dspartyPlaza, "Booking2");
-
-            //sqlBookingDet = @"select * bookingDet where BookingNo LIKE @BookingNo order by BookingNo";
-            //daBookingDet = new SqlDataAdapter(sqlBookingDet, conn);
-            //cmdBookingDet = new SqlCommand(sqlBookingDetails);
-            //cmdBookingDet.Parameters.Add("@BookingNo", SqlDbType.Int);
-            //daBookingDet = new SqlDataAdapter(cmdBookingDetails);
-            //daBookingDet.FillSchema(dspartyPlaza, SchemaType.Source, "BookingDetails");
-
 
             sqlBookingDet2 = @"select * from bookingDet";
             daBookingDet2 = new SqlDataAdapter(sqlBookingDet2, conn);
@@ -81,15 +101,29 @@ Forename as name, street, town, county, custpostcode, telno, Email from customer
             daBookingDet2.FillSchema(dspartyPlaza, SchemaType.Source, "BookingDetails");
             daBookingDet2.Fill(dspartyPlaza, "BookingDetails");
 
-            sqlProductDetails = @"Select productNo, supplierNo, ProductTypeNo,ProductDesc ,CostPrice ,SellingPrice,QtyStock from Product where productNo LIKE @BookingNo order by productNo";
+            sqlProductDetails = @"Select productNo, supplierNo, ProductTypeNo,ProductDesc ,CostPrice
+                       ,SellingPrice,QtyStock from Product where productNo LIKE @BookingNo order by productNo";
             cmdProductDetails = new SqlCommand(sqlProductDetails, conn);
             cmdProductDetails.Parameters.Add("@BookingNo", SqlDbType.Int);
             daProduct = new SqlDataAdapter(cmdProductDetails);
             daProduct.FillSchema(dspartyPlaza, SchemaType.Source, "Product");
 
-          
+
+            sqlProductDetails = @"Select productNo, supplierNo, ProductTypeNo,ProductDesc ,CostPrice
+                       ,SellingPrice,QtyStock from Product where productNo LIKE @ProductTypeNo order by productNo";
+            cmdProductDetails = new SqlCommand(sqlProductDetails, conn);
+            cmdProductDetails.Parameters.Add("@ProductTypeNo", SqlDbType.Int);
+            daProduct = new SqlDataAdapter(cmdProductDetails);
+            daProduct.FillSchema(dspartyPlaza, SchemaType.Source, "Product");
+
+            listBoxCust.DataSource = dspartyPlaza.Tables["Customer"];
+            listBoxCust.DisplayMember = "Name";
+            listBoxCust.ValueMember = "CustomerNo";
 
 
+            listBoxProducts.DataSource = dspartyPlaza.Tables["Product"];
+            listBoxProducts.DisplayMember = "ProductDesc";
+            listBoxProducts.ValueMember = "ProductNo";
 
         }
         private void butEditBooking_Click(object sender, EventArgs e)
@@ -108,7 +142,7 @@ Forename as name, street, town, county, custpostcode, telno, Email from customer
                 }
                 else
                 {
-                    DataRow drBooking = dspartyPlaza.Tables["BookingDet2"].Rows.Find(listBoxBooking.Text);
+                    DataRow drBooking = dspartyPlaza.Tables["BookingDet2"].Rows.Find(listBoxProducts.Text);
 
 
                     drBooking.BeginEdit();
@@ -133,11 +167,11 @@ Forename as name, street, town, county, custpostcode, telno, Email from customer
         private void listBoxBooking_Click(object sender, EventArgs e)
         {
             dtpStartDate.Enabled = true;
-            listViewBooking.Enabled = true;
+            listViewProduct.Enabled = true;
 
-            if (listViewBooking.Items.Count != 0)
+            if (listViewProduct.Items.Count != 0)
             {
-                DataRow drBooking = dspartyPlaza.Tables["Booking"].Rows.Find(listBoxBooking.SelectedValue);
+                DataRow drBooking = dspartyPlaza.Tables["Booking"].Rows.Find(listBoxProducts.SelectedValue);
 
                 labBookingDate.Text = (Convert.ToDateTime(drBooking["DateBooked"].ToString())).ToShortTimeString();
 
@@ -148,21 +182,21 @@ Forename as name, street, town, county, custpostcode, telno, Email from customer
                 {
                     dtpStartDate.Enabled = false;
                     
-                    listViewBooking.Enabled = false;
+                    listViewProduct.Enabled = false;
                 }
 
                 dspartyPlaza.Tables["@BookingDet"].Clear();
 
-                cmdBooking.Parameters["@BookingNo"].Value = listBoxBooking.SelectedValue;
+                cmdBooking.Parameters["@BookingNo"].Value = listBoxProducts.SelectedValue;
                 daBooking.Fill(dspartyPlaza, "BookingDet");
 
                 foreach (DataRow dr in dspartyPlaza.Tables["BookingDet"].Rows)
                 {
-                    if (dr["BookingNo"].ToString() == listBoxBooking.Text)
+                    if (dr["ProductNo"].ToString() == listBoxProducts.Text)
                     {
-                        ListViewItem item = new ListViewItem(dr["DogNo"].ToString());
-                        item.SubItems.Add(dr["KennelNo"].ToString());
-                        listViewBooking.Items.Add(item);
+                        ListViewItem item = new ListViewItem(dr["ProductNo"].ToString());
+                        item.SubItems.Add(dr["ProductDesc"].ToString());
+                        listViewProduct.Items.Add(item);
 
                     }
                 }
@@ -171,28 +205,28 @@ Forename as name, street, town, county, custpostcode, telno, Email from customer
 
         private void butDeleteItem_Click(object sender, EventArgs e)
         {
-            if (listViewBooking.SelectedItems.Count != 0)
+            if (listViewProduct.SelectedItems.Count != 0)
             {
                 if (MessageBox.Show("Are you sure you want to delete the Booking details for Dog no: "
-                    + listViewBooking.SelectedItems[0].SubItems[0].Text + "?", "Delete Dog Details",
+                    + listViewProduct.SelectedItems[0].SubItems[0].Text + "?", "Delete Dog Details",
                     MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                 {
                     object[] primaryKey = new object[2];
 
-                    ListViewItem currItem = listViewBooking.SelectedItems[0];
+                    ListViewItem currItem = listViewProduct.SelectedItems[0];
 
-                    primaryKey[0] = Convert.ToInt32(listViewBooking);
+                    primaryKey[0] = Convert.ToInt32(listViewProduct);
                     primaryKey[1] = Convert.ToInt32(currItem.SubItems[0].Text);
 
 
                     DataRow drBookingDet = dspartyPlaza.Tables["BookingDet2"].Rows.Find(primaryKey);
 
-                    listViewBooking.Items.Remove(currItem);
+                    listViewProduct.Items.Remove(currItem);
 
                     drBookingDet.Delete();
                     daBookingDet2.Update(dspartyPlaza, "BookingDet2");
 
-                    if (listViewBooking.Items.Count != 0)
+                    if (listViewProduct.Items.Count != 0)
                     {
                         MessageBox.Show("As there are no booking details, Booking No " + primaryKey[0].ToString() +
                             " will now be deleted");
@@ -202,57 +236,41 @@ Forename as name, street, town, county, custpostcode, telno, Email from customer
                         drBooking.Delete();
                         daBooking2.Update(dspartyPlaza, "Booking2");
 
-                        PopulateBookingListBox();
+                        PopulateProductListBox();
                     }
                 }
             }
         }
-        private void PopulateBookingListBox()
+        private void PopulateProductListBox()
         {
-            dspartyPlaza.Tables["Booking"].Clear();
 
-            cmdBooking.Parameters["@CustNo"].Value = listBoxCust.SelectedValue;
+           
 
-            daBooking.Fill(dspartyPlaza, "Booking");
-
-            listBoxBooking.DataSource = dspartyPlaza.Tables["Booking"];
-            listBoxBooking.DisplayMember = "BookingNo";
-            listBoxBooking.ValueMember = "BookingNo";
+          
         }
-
-        private void PopulateBookingDetListBox()
-        {
-            dspartyPlaza.Tables["Booking"].Clear();
-
-            cmdBookingDetails.Parameters["@CustNo"].Value = listBoxCust.SelectedValue;
-
-            daBooking.Fill(dspartyPlaza, "Booking");
-
-            listBoxBookingDet.DataSource = dspartyPlaza.Tables["Booking"];
-            listBoxBookingDet.DisplayMember = "BookingNo";
-            listBoxBookingDet.ValueMember = "BookingNo";
-        }
+        
+        
 
 
         private void butDeleteBooking_Click(object sender, EventArgs e)
         {
-            if (listBoxBooking.SelectedItems.Count != 0)
+            if (listBoxProducts.SelectedItems.Count != 0)
             {
                 if (MessageBox.Show("Are you sure you want to delete the Booking details for Dog no: "
-                    + listViewBooking.SelectedItems[0].SubItems[0].Text + "?", "Delete Dog Details",
+                    + listViewProduct.SelectedItems[0].SubItems[0].Text + "?", "Delete Dog Details",
                     MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                 {
                     object[] primaryKey = new object[2];
 
-                    foreach (ListViewItem item in listViewBooking.Items)
+                    foreach (ListViewItem item in listViewProduct.Items)
                     {
 
-                        primaryKey[0] = Convert.ToInt32(listViewBooking);
+                        primaryKey[0] = Convert.ToInt32(listViewProduct);
                         primaryKey[1] = Convert.ToInt32(item.SubItems[0].Text);
 
                         DataRow drBookingDet = dspartyPlaza.Tables["BookingDet2"].Rows.Find(primaryKey);
 
-                        listViewBooking.Items.Remove(item);
+                        listViewProduct.Items.Remove(item);
 
                         drBookingDet.Delete();
                         daBookingDet2.Update(dspartyPlaza, "BookingDet2");
@@ -260,7 +278,7 @@ Forename as name, street, town, county, custpostcode, telno, Email from customer
                     }
 
 
-                    if (listViewBooking.Items.Count != 0)
+                    if (listViewProduct.Items.Count != 0)
                     {
                         DataRow drBookingDet = dspartyPlaza.Tables["BookingDet2"].Rows.Find(primaryKey[0]);
                         MessageBox.Show("As there are no booking details, Booking No " + primaryKey[0].ToString() +
@@ -271,7 +289,7 @@ Forename as name, street, town, county, custpostcode, telno, Email from customer
                         drBooking.Delete();
                         daBooking2.Update(dspartyPlaza, "Booking2");
 
-                        PopulateBookingListBox();
+                        PopulateProductListBox();
 
 
                     }
@@ -292,12 +310,10 @@ Forename as name, street, town, county, custpostcode, telno, Email from customer
 
             if (listBoxCust.SelectedIndex == -1)
                 MessageBox.Show("Please select a customer", "customer");
-            if (listBoxBookingDet.SelectedIndex == -1)
-                MessageBox.Show("Please select a dog", "dog");
-            if (listBoxCustomer.SelectedIndex == -1)
+            if (listBoxProdType.SelectedIndex == -1)
                 MessageBox.Show("Please select a kennel", "kennel");
            
-            if (listViewBooking.Items.Count == 0)
+            if (listViewProduct.Items.Count == 0)
             {
                 MessageBox.Show("Please input dog/kennel to the booking", "booking details");
 
@@ -316,7 +332,7 @@ Forename as name, street, town, county, custpostcode, telno, Email from customer
                 dspartyPlaza.Tables["Booking"].Rows.Add(drBooking);
                 daBooking.Update(dspartyPlaza, "Booking");
 
-                foreach (ListViewItem item in listViewBooking.Items)
+                foreach (ListViewItem item in listViewProduct.Items)
                 {
                     drBookingDets = dspartyPlaza.Tables["BookingDet"].NewRow();
 
@@ -360,15 +376,14 @@ Forename as name, street, town, county, custpostcode, telno, Email from customer
         private void butEditItem_Click(object sender, EventArgs e)
         {
             pnlAddEdit.Enabled = true;
-
         }
 
         private void butRemoveItem_Click(object sender, EventArgs e)
         {
-            if (listViewBooking.SelectedItems.Count != 0)
+            if (listViewProduct.SelectedItems.Count != 0)
             {
-                var item = listViewBooking.SelectedItems[0];
-                listViewBooking.Items.Remove(item);
+                var item = listViewProduct.SelectedItems[0];
+                listViewProduct.Items.Remove(item);
             }
         }
         private void ClearCustomer()
