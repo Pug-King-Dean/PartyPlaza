@@ -59,12 +59,11 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(163, 520);
             this.panel1.TabIndex = 0;
-            this.panel1.Click += new System.EventHandler(this.lblMenu_Click);
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // btnDisplayExit
             // 
             this.btnDisplayExit.BackColor = System.Drawing.Color.Transparent;
+            this.btnDisplayExit.Image = global::PartyPlaza.Properties.Resources.MicrosoftTeams_image__14_;
             this.btnDisplayExit.Location = new System.Drawing.Point(31, 398);
             this.btnDisplayExit.Name = "btnDisplayExit";
             this.btnDisplayExit.Size = new System.Drawing.Size(104, 89);
@@ -134,6 +133,7 @@
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(897, 517);
             this.pnlMain.TabIndex = 2;
+            this.pnlMain.ControlRemoved += new System.Windows.Forms.ControlEventHandler(this.pnlMain_ControlRemoved);
             this.pnlMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel3_MouseDown);
             // 
             // pictureBox1
@@ -156,7 +156,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "FrmMain";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.frmMain_Load);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.btnDisplayExit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ButBooking)).EndInit();

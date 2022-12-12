@@ -10,5 +10,7 @@ namespace PartyPlaza
     {
         public static bool frmClosing = false, frmEditForm = false, frmAddForm = false;
         public static int selectedCustNo;
+        public static bool frmAddCustomer = false, frmEditCustomer = false, frmBooking = false, 
+            frmEditBooking = false, frmCustomer = false, frmDisplayBooking = false;
     }
 }

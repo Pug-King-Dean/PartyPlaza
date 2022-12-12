@@ -89,8 +89,7 @@ namespace PartyPlaza
         private void butAddCust_Click(object sender, EventArgs e)
         {
 
-            FrmAddCustomer frmAdd = new FrmAddCustomer();
-            frmAdd.Show();
+            MyGlobals.frmAddCustomer = true;
             Close();
         }
         private void butEditCust_Click(object sender, EventArgs e)
@@ -101,11 +100,11 @@ namespace PartyPlaza
             }
             else if(dgvCustomer.SelectedRows.Count ==1)
             {
-                FrmEditCustomer frmEdit = new FrmEditCustomer();
+
                 
                 MyGlobals.selectedCustNo = Convert.ToInt32(dgvCustomer.SelectedRows[0].Cells[0].Value);
-                MyGlobals.frmEditForm = true;
-                frmEdit.Show();
+                MyGlobals.frmEditCustomer = true;
+              Close();
             }
         }
 
